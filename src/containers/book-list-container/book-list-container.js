@@ -5,7 +5,7 @@ import withBookstoreService from "../../components/hoc/with-bookstore-service";
 import ErrorIndicator from "../../components/error-indicator/error-indicator";
 import Spinner from "../../components/spinner/spinner";
 import BookList from "../../components/books-list/book-list";
-
+import {bindActionCreators} from 'redux';
 
 
 class BookListContainer extends React.Component {
@@ -48,10 +48,11 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     booksRequested,
     booksError*/
     const {bookstoreService} = ownProps;
-    return  {
-        fetchData: fetchData(bookstoreService, dispatch),
-        onAddToCart: (idx) => dispatch(onAddToCart(idx))
-    }
+    return  bindActionCreators({
+        fetchData: () => fetchData(bookstoreService)(),
+        //fetchData: fetchData(bookstoreService, dispatch),
+        onAddToCart: onAddToCart
+    }, dispatch)
 };
 
 

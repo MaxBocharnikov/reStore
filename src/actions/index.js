@@ -19,7 +19,7 @@ const booksError = (err) => {
     }
 };
 
-const fetchData = (bookstoreService, dispatch) => () => {
+const fetchDataOld = (bookstoreService, dispatch) => () => {
     dispatch(booksRequested());
     bookstoreService.getBooks()
         .then((books) => {
@@ -29,6 +29,17 @@ const fetchData = (bookstoreService, dispatch) => () => {
             dispatch(booksError(error));
         });
 
+};
+
+const fetchData = (bookstoreService) => () => (dispatch) => {
+    dispatch(booksRequested());
+    bookstoreService.getBooks()
+        .then((books) => {
+            dispatch(booksLoaded(books));
+        })
+        .catch((error) => {
+            dispatch(booksError(error));
+        });
 };
 
 const onAddToCart = (id) => {
